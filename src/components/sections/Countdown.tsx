@@ -1,37 +1,74 @@
-import { useState, useEffect } from "react";
-import { Calendar } from "lucide-react";
-import { getWeddingDateTime } from "../../constants/datetime";
-import { eventDetails } from "../../constants/event-details";
+import { useEffect, useState } from "react";
 import { fonts } from "../../constants/font";
 import { colors } from "../../constants/colors";
+import { getWeddingDateTime } from "../../constants/datetime";
+import { eventDetails } from "../../constants/event-details";
+import { Calendar } from "lucide-react";
 
-const Countdown = () => {
-  const [timeLeft, setTimeLeft] = useState({
+interface TimeLeft {
+  days: number;
+  hours: number;
+  minutes: number;
+  seconds: number;
+}
+
+const calculateTimeLeft = (targetDate: Date): TimeLeft => {
+  const difference = targetDate.getTime() - new Date().getTime();
+  let timeLeft: TimeLeft = {
     days: 0,
     hours: 0,
     minutes: 0,
+    seconds: 0,
+  };
+
+  if (difference > 0) {
+    timeLeft = {
+      days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+      hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+      minutes: Math.floor((difference / 1000 / 60) % 60),
+      seconds: Math.floor((difference / 1000) % 60),
+    };
+  }
+
+  return timeLeft;
+};
+
+const Countdown = () => {
+  const [timeLeft, setTimeLeft] = useState<TimeLeft>({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
   });
 
   useEffect(() => {
-    const calculateTimeLeft = () => {
-      const weddingDate = new Date(getWeddingDateTime());
-      const now = new Date().getTime();
-      const difference = weddingDate.getTime() - now;
-
-      if (difference > 0) {
-        setTimeLeft({
-          days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-          hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-          minutes: Math.floor((difference / 1000 / 60) % 60),
-        });
-      }
-    };
-
-    calculateTimeLeft();
-    const timer = setInterval(calculateTimeLeft, 1000 * 60); // Update every minute
+    const targetDate = new Date(getWeddingDateTime());
+    const timer = setInterval(() => {
+      setTimeLeft(calculateTimeLeft(targetDate));
+    }, 1000);
 
     return () => clearInterval(timer);
   }, []);
+
+  const TimeUnit = ({ value, label }: { value: number; label: string }) => (
+    <div className="flex-1 px-2 sm:px-4">
+      <div className="relative overflow-hidden rounded-xl bg-white/10 backdrop-blur-sm p-3 sm:p-4 group hover:bg-white/15 transition-all duration-300">
+        <div className="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        <div className="relative">
+          <div
+            className={`${fonts.title} text-2xl sm:text-4xl md:text-5xl font-bold text-white mb-1`}
+          >
+            {value.toString().padStart(2, "0")}
+          </div>
+          <div
+            className={`${fonts.subtitle} text-xs sm:text-sm text-white/70 uppercase tracking-wider`}
+          >
+            {label}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 
   const addToCalendar = () => {
     const location = eventDetails.reception.location;
@@ -59,70 +96,21 @@ const Countdown = () => {
         <div className="mb-8 max-w-sx mx-auto">
           <p
             className={`${fonts.subtitle} font-bold text-2xl md:text-4xl text-white`}
-            // style={{ color: colors.text }}
           >
             {eventDetails.reception.day}
           </p>
           <p
             className={`${fonts.subtitle} font-bold text-2xl md:text-4xl mb-8 text-white`}
-            // style={{ color: colors.text }}
           >
             {eventDetails.reception.time}
           </p>
         </div>
 
-        <div className="grid grid-cols-3 gap-4 max-w-md mx-auto mb-8">
-          <div
-            className="p-4 rounded-lg"
-            style={{ backgroundColor: colors.secondary }}
-          >
-            <div
-              className={`${fonts.title} text-4xl font-bold`}
-              style={{ color: colors.primary }}
-            >
-              {timeLeft.days}
-            </div>
-            <div
-              className={`${fonts.subtitle} text-sm`}
-              style={{ color: colors.textLight }}
-            >
-              Days
-            </div>
-          </div>
-          <div
-            className="p-4 rounded-lg"
-            style={{ backgroundColor: colors.secondary }}
-          >
-            <div
-              className={`${fonts.title} text-4xl font-bold`}
-              style={{ color: colors.primary }}
-            >
-              {timeLeft.hours}
-            </div>
-            <div
-              className={`${fonts.subtitle} text-sm`}
-              style={{ color: colors.textLight }}
-            >
-              Hours
-            </div>
-          </div>
-          <div
-            className="p-4 rounded-lg"
-            style={{ backgroundColor: colors.secondary }}
-          >
-            <div
-              className={`${fonts.title} text-4xl font-bold`}
-              style={{ color: colors.primary }}
-            >
-              {timeLeft.minutes}
-            </div>
-            <div
-              className={`${fonts.subtitle} text-sm`}
-              style={{ color: colors.textLight }}
-            >
-              Minutes
-            </div>
-          </div>
+        <div className="flex justify-center space-x-2 sm:space-x-4 max-w-md mx-auto mb-8 text-white">
+          <TimeUnit value={timeLeft.days} label="Days" />
+          <TimeUnit value={timeLeft.hours} label="Hours" />
+          <TimeUnit value={timeLeft.minutes} label="Minutes" />
+          <TimeUnit value={timeLeft.seconds} label="Seconds" />
         </div>
 
         <button

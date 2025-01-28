@@ -16,25 +16,28 @@ export const RSVPMessages = () => {
     try {
       // First, get the total count
       const { count, error: countError } = await supabase
-        .from('rsvp_demo')
-        .select('*', { count: 'exact', head: true });
+        .from("rsvp_demo_02")
+        .select("*", { count: "exact", head: true });
 
       if (countError) throw countError;
-      
+
       setTotalMessages(count || 0);
 
       // Then fetch the paginated data
       const { data, error } = await supabase
-        .from('rsvp_demo')
-        .select('*')
-        .order('created_at', { ascending: false })
-        .range(currentPage * MESSAGES_PER_PAGE, (currentPage + 1) * MESSAGES_PER_PAGE - 1);
+        .from("rsvp_demo_02")
+        .select("*")
+        .order("created_at", { ascending: false })
+        .range(
+          currentPage * MESSAGES_PER_PAGE,
+          (currentPage + 1) * MESSAGES_PER_PAGE - 1
+        );
 
       if (error) throw error;
 
       setMessages(data || []);
     } catch (error) {
-      console.error('Error fetching messages:', error);
+      console.error("Error fetching messages:", error);
     } finally {
       setLoading(false);
     }
@@ -58,7 +61,10 @@ export const RSVPMessages = () => {
     return (
       <div className="py-16 px-4" style={{ backgroundColor: colors.secondary }}>
         <div className="max-w-4xl mx-auto text-center">
-          <p className={`${fonts.subtitle}`} style={{ color: colors.textLight }}>
+          <p
+            className={`${fonts.subtitle}`}
+            style={{ color: colors.textLight }}
+          >
             Loading messages...
           </p>
         </div>
@@ -69,11 +75,11 @@ export const RSVPMessages = () => {
   return (
     <div className="py-16 px-4" style={{ backgroundColor: colors.secondary }}>
       <div className="max-w-4xl mx-auto">
-        <MessageSquare 
-          className="mx-auto mb-6 w-8 h-8" 
-          style={{ color: colors.primary }} 
+        <MessageSquare
+          className="mx-auto mb-6 w-8 h-8"
+          style={{ color: colors.primary }}
         />
-        <h2 
+        <h2
           className={`${fonts.heading} text-3xl text-center mb-12`}
           style={{ color: colors.text }}
         >
@@ -82,29 +88,31 @@ export const RSVPMessages = () => {
 
         <div className="grid gap-6 mb-8">
           {messages.map((message) => (
-            <div 
+            <div
               key={message.id}
               className="p-6 rounded-lg"
               style={{ backgroundColor: colors.background }}
             >
               <div className="flex justify-between items-start mb-4">
                 <div>
-                  <h3 
+                  <h3
                     className={`${fonts.subtitle} text-lg font-medium mb-1`}
                     style={{ color: colors.primary }}
                   >
                     {message.name}
                   </h3>
-                  <p 
+                  <p
                     className={`${fonts.body} text-sm`}
                     style={{ color: colors.textLight }}
                   >
-                    {message.attending === 'yes' 
-                      ? `Will attend with ${message.number_of_guests} guest${message.number_of_guests > 1 ? 's' : ''}`
-                      : 'Unable to attend'}
+                    {message.attending === "yes"
+                      ? `Will attend with ${message.number_of_guests} guest${
+                          message.number_of_guests > 1 ? "s" : ""
+                        }`
+                      : "Unable to attend"}
                   </p>
                 </div>
-                <span 
+                <span
                   className={`${fonts.body} text-sm`}
                   style={{ color: colors.textLight }}
                 >
@@ -112,7 +120,7 @@ export const RSVPMessages = () => {
                 </span>
               </div>
               {message.message && (
-                <p 
+                <p
                   className={`${fonts.body} mt-2`}
                   style={{ color: colors.text }}
                 >
@@ -130,14 +138,14 @@ export const RSVPMessages = () => {
               onClick={handlePrevPage}
               disabled={currentPage === 0}
               className="p-2 rounded-full transition-colors duration-200 disabled:opacity-50"
-              style={{ 
+              style={{
                 backgroundColor: colors.primary,
-                color: 'white'
+                color: "white",
               }}
             >
               <ChevronLeft size={20} />
             </button>
-            <span 
+            <span
               className={`${fonts.body} text-sm`}
               style={{ color: colors.text }}
             >
@@ -147,9 +155,9 @@ export const RSVPMessages = () => {
               onClick={handleNextPage}
               disabled={currentPage >= totalPages - 1}
               className="p-2 rounded-full transition-colors duration-200 disabled:opacity-50"
-              style={{ 
+              style={{
                 backgroundColor: colors.primary,
-                color: 'white'
+                color: "white",
               }}
             >
               <ChevronRight size={20} />

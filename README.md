@@ -1,88 +1,85 @@
-# Wedding Zinc - Undangan Pernikahan Digital
+# Wedding Classic - Elegant Digital Wedding Invitation
 
-Aplikasi undangan pernikahan digital yang elegan dan modern, dibuat dengan React, TypeScript, dan Tailwind CSS. Dilengkapi dengan fitur RSVP yang terintegrasi dengan Supabase untuk penyimpanan data.
+A modern and elegant digital wedding invitation application built with React, TypeScript, and Tailwind CSS. Features a beautiful split animation effect and integrated RSVP system with Supabase.
 
-## 📱 Demo & Preview
+## ✨ Features
 
-- Demo: [Link Demo](#)
-- Repository: [GitHub](#)
+### 1. Cover Page
+- Elegant split animation effect when opening the invitation
+- Dynamic guest name from URL parameter (`?to=Guest+Name`)
+- Beautiful background images for bride and groom
+- Floating sparkles animation effect
+- Smooth transitions and hover effects
 
-## 🌟 Fitur-Fitur
+### 2. Hero Section
+- Full-screen responsive design
+- Dynamic background with overlay
+- Elegant typography and animations
+- Smooth scroll integration
 
-### 1. Halaman Cover
-- Tampilan awal dengan animasi yang menarik
-- Nama tamu undangan otomatis dari parameter URL (`?to=Nama+Tamu`)
-- Tombol "Open Invitation" dengan efek transisi halus
-- Background dengan efek blur untuk meningkatkan keterbacaan teks
+### 3. Countdown Section
+- Real-time countdown to the wedding day
+- Modern glass-morphism design
+- Responsive layout for all devices
+- Beautiful hover animations
 
-### 2. Musik Latar
-- Pemutaran musik otomatis saat undangan dibuka
-- Tombol kontrol musik floating yang elegan
-- Dukungan format audio MP3
-- Kontrol play/pause yang responsif
+### 4. RSVP System
+- Integrated with Supabase
+- Real-time form validation
+- Guest attendance confirmation
+- Message/wishes submission
+- Pagination for viewing messages
+- Character limit for messages
 
-### 3. Informasi Acara
-- Tampilan countdown timer yang dinamis
-- Detail waktu dan lokasi untuk akad nikah
-- Detail waktu dan lokasi untuk resepsi
-- Integrasi dengan Google Maps
-- Tombol "Add to Calendar" untuk Google Calendar
+### 5. Additional Features
+- Responsive design for all screen sizes
+- Modern animations and transitions
+- Clean and elegant UI
+- Cross-browser compatibility
+- Performance optimized
 
-### 4. Galeri Foto
-- Layout responsif dengan grid system
-- Efek hover yang menarik
-- Optimasi gambar otomatis
-- Mendukung berbagai format gambar
+## 🛠️ Tech Stack
 
-### 5. RSVP dengan Supabase
-- Form konfirmasi kehadiran yang interaktif
-- Validasi input otomatis
-- Notifikasi sukses/error yang informatif
-- Integrasi dengan Supabase untuk penyimpanan data
-- Fitur pagination untuk menampilkan pesan (5 pesan per halaman)
-- Batasan karakter pesan (maksimal 200 karakter)
-- Real-time update pesan ucapan
-
-### 6. Amplop Digital
-- Informasi rekening yang terstruktur
-- Tampilan yang rapi dan profesional
-- Fitur salin nomor rekening dengan satu klik
-- Konfirmasi visual saat nomor rekening disalin
-- Animasi hover pada kartu rekening
-
-### 7. Footer
-- Logo Vertical dengan link ke website perusahaan
-- Integrasi media sosial (Instagram, Facebook, Twitter, Email)
-- Informasi copyright dan alamat perusahaan
-- Link ke halaman Privacy Policy, Terms of Service, dan Contact
-- Desain responsif yang menyesuaikan ukuran layar
-
-## 💻 Teknologi
-
-- React + TypeScript
+- React 18
+- TypeScript
 - Tailwind CSS
-- Supabase (Database & Authentication)
+- Supabase
 - Lucide Icons
-- Google Maps API
-- Web Audio API
 
-## 🛠️ Cara Instalasi
+## 📦 Installation
 
-1. Clone repository
+1. Clone the repository
 ```bash
-git clone https://github.com/username/wedding-zinc.git
-cd wedding-zinc
+git clone <repository-url>
+cd wedding-classic
 ```
 
 2. Install dependencies
 ```bash
 npm install
+# or
+yarn install
 ```
 
-3. Setup Supabase
+3. Set up environment variables
+```env
+VITE_SUPABASE_URL=your_supabase_url
+VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+```
+
+4. Start development server
+```bash
+npm run dev
+# or
+yarn dev
+```
+
+## 💾 Database Setup
+
+Create the following table in your Supabase database:
+
 ```sql
--- Buat tabel RSVP
-create table public.rsvp_demo (
+create table public.rsvp_demo_02 (
     id uuid default gen_random_uuid() primary key,
     created_at timestamp with time zone default timezone('utc'::text, now()) not null,
     name text not null,
@@ -93,94 +90,32 @@ create table public.rsvp_demo (
 );
 
 -- Enable Row Level Security
-alter table public.rsvp_demo enable row level security;
+alter table public.rsvp_demo_02 enable row level security;
 
--- Buat policy untuk view dan insert
+-- Create policies
 create policy "Allow public to view visible messages" 
-    on public.rsvp_demo for select using (is_visible = true);
+    on public.rsvp_demo_02 for select using (is_visible = true);
 create policy "Allow public to insert" 
-    on public.rsvp_demo for insert with check (true);
+    on public.rsvp_demo_02 for insert with check (true);
 ```
 
-4. Konfigurasi Environment
-```bash
-# .env
-VITE_SUPABASE_URL=your_supabase_url
-VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
-```
+## 🎨 Customization
 
-5. Jalankan aplikasi
-```bash
-npm run dev
-```
+1. Update couple information in `src/constants/couple.ts`
+2. Modify colors in `src/constants/colors.ts`
+3. Replace images in `public/images/`:
+   - `bride.jpeg` - Bride's photo
+   - `groom.jpeg` - Groom's photo
+   - `hero-bg.jpeg` - Hero section background
 
-## 📝 Cara Kustomisasi
+## 📝 License
 
-### 1. Informasi Pasangan
-Edit file `src/constants/couple.ts`:
-```typescript
-export const couple = {
-  groom: {
-    name: "Nama Pengantin Pria",
-    photo: "/images/groom.jpg",
-    parents: "Nama Orang Tua Pria",
-    social: {
-      instagram: "@username"
-    }
-  },
-  bride: {
-    name: "Nama Pengantin Wanita",
-    photo: "/images/bride.jpg",
-    parents: "Nama Orang Tua Wanita",
-    social: {
-      instagram: "@username"
-    }
-  },
-  bankAccounts: {
-    "BCA": "1234567890",
-    "Mandiri": "0987654321"
-  }
-};
-```
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-### 2. Waktu & Lokasi
-Edit file `src/constants/event-details.ts`
+## 🤝 Contributing
 
-### 3. Tema Warna
-Edit file `src/constants/colors.ts`
+Contributions, issues and feature requests are welcome. Feel free to check [issues page](issues-link) if you want to contribute.
 
-### 4. Font
-Edit file `src/constants/font.ts`
+## ⭐️ Show your support
 
-## 📱 Format URL Tamu
-
-- Format: `https://domain.com/?to=Nama+Tamu`
-- Contoh: `https://domain.com/?to=Budi+Santoso`
-- Spasi menggunakan tanda `+` atau `%20`
-
-## 🔧 Tips Optimasi
-
-1. Kompresi Gambar
-   - Gunakan format WebP untuk gambar
-   - Optimasi ukuran dengan tools seperti TinyPNG
-
-2. Performa Audio
-   - Kompresi file musik (128kbps cukup untuk web)
-   - Format MP3 lebih kompatibel
-
-3. Loading Time
-   - Implementasi lazy loading untuk gambar
-   - Preload untuk aset penting
-
-4. Database
-   - Gunakan pagination untuk RSVP messages
-   - Batasi jumlah karakter pesan
-   - Index kolom yang sering digunakan
-
-## 📄 Lisensi
-
-MIT License - Silakan gunakan dan modifikasi sesuai kebutuhan Anda.
-
-## 🤝 Kontribusi
-
-Kontribusi selalu diterima! Silakan buat pull request atau laporkan issues jika menemukan bug.
+Give a ⭐️ if this project helped you!

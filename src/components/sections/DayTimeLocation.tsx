@@ -10,70 +10,162 @@ const DayTimeLocation = () => {
   };
 
   return (
-    <div className="py-16 px-4" style={{ backgroundColor: colors.secondary }}>
-      <div className="max-w-4xl mx-auto">
-        <h2 className={`${fonts.heading} text-3xl text-center mb-12`} style={{ color: colors.text }}>
-          Wedding Events
-        </h2>
+    <div
+      className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden"
+      style={{ backgroundColor: colors.secondary }}
+    >
+      {/* Background Pattern */}
+      <div className="absolute inset-0 opacity-5">
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: "url('/images/pattern.png')",
+            backgroundRepeat: "repeat",
+            opacity: 0.1,
+          }}
+        />
+      </div>
 
-        <div className="grid md:grid-cols-2 gap-8">
+      <div className="max-w-7xl mx-auto relative z-10">
+        <div className="text-center mb-16">
+          <h2
+            className={`${fonts.title} text-4xl sm:text-5xl mb-4`}
+            style={{ color: colors.text }}
+          >
+            Wedding Events
+          </h2>
+          <div
+            className="w-24 h-1 mx-auto"
+            style={{ backgroundColor: colors.primary }}
+          ></div>
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
           {/* Ceremony */}
-          <div className="bg-white p-8 rounded-lg shadow-md" style={{ backgroundColor: colors.background }}>
-            <h3 className={`${fonts.heading} text-2xl text-center mb-6`} style={{ color: colors.primary }}>
-              The Ceremony
-            </h3>
-            <div className="space-y-4">
-              <div className="flex items-center">
-                <Calendar className="w-5 h-5 text-[#D4A373] mr-3" style={{ color: colors.primary }} />
-                <p className={`${fonts.subtitle} text-[#6B705C]`} style={{ color: colors.textLight }}>
-                  {eventDetails.akad.date}
-                </p>
-              </div>
-              <div className="flex items-start">
-                <MapPin className="w-5 h-5 text-[#D4A373] mr-3 mt-1" style={{ color: colors.primary }} />
-                <div>
-                  <p className={`${fonts.subtitle} text-[#6B705C] mb-2`} style={{ color: colors.textLight }}>
-                    {eventDetails.akad.location}
-                  </p>
-                  <button
-                    onClick={() => openGoogleMaps(eventDetails.akad.link)}
-                    className="inline-flex items-center px-4 py-2 bg-[#D4A373] text-white rounded-md hover:bg-[#c49366] transition-colors duration-300 text-sm"
-                    style={{ backgroundColor: colors.primary, color: "white" }}
+          <div
+            className="bg-white rounded-2xl shadow-xl overflow-hidden transform hover:-translate-y-2 transition-all duration-300"
+            style={{ backgroundColor: colors.background }}
+          >
+            <div className="p-8">
+              <h3
+                className={`${fonts.title} text-2xl sm:text-3xl text-center mb-8`}
+                style={{ color: colors.primary }}
+              >
+                The Ceremony
+              </h3>
+              <div className="space-y-6">
+                <div className="flex items-center space-x-4">
+                  <div
+                    className="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center"
+                    style={{ backgroundColor: `${colors.primary}15` }}
                   >
-                    <MapPin className="w-4 h-4 mr-2" />
-                    <span className={fonts.body}>View Location</span>
-                  </button>
+                    <Calendar
+                      className="w-6 h-6"
+                      style={{ color: colors.primary }}
+                    />
+                  </div>
+                  <p
+                    className={`${fonts.subtitle} text-lg`}
+                    style={{ color: colors.textLight }}
+                  >
+                    {eventDetails.akad.date}
+                  </p>
+                </div>
+
+                <div className="flex items-start space-x-4">
+                  <div
+                    className="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center"
+                    style={{ backgroundColor: `${colors.primary}15` }}
+                  >
+                    <MapPin
+                      className="w-6 h-6"
+                      style={{ color: colors.primary }}
+                    />
+                  </div>
+                  <div className="flex-1">
+                    <p
+                      className={`${fonts.subtitle} text-lg mb-3`}
+                      style={{ color: colors.textLight }}
+                    >
+                      {eventDetails.akad.location}
+                    </p>
+                    <button
+                      onClick={() => openGoogleMaps(eventDetails.akad.link)}
+                      className="inline-flex items-center px-6 py-3 rounded-full text-white shadow-lg transform hover:scale-105 transition-all duration-300"
+                      style={{ backgroundColor: colors.primary }}
+                    >
+                      <MapPin className="w-5 h-5 mr-2" />
+                      <span className={`${fonts.body} text-sm`}>
+                        View on Maps
+                      </span>
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
 
           {/* Reception */}
-          <div className="bg-white p-8 rounded-lg shadow-md" style={{ backgroundColor: colors.background }}>
-            <h3 className={`${fonts.heading} text-2xl text-center mb-6`} style={{ color: colors.primary }}>
-              The Reception
-            </h3>
-            <div className="space-y-4">
-              <div className="flex items-center">
-                <Calendar className="w-5 h-5 text-[#D4A373] mr-3" style={{ color: colors.primary }} />
-                <p className={`${fonts.subtitle} text-[#6B705C]`} style={{ color: colors.textLight }}>
-                  {eventDetails.reception.date}
-                </p>
-              </div>
-              <div className="flex items-start">
-                <MapPin className="w-5 h-5 text-[#D4A373] mr-3 mt-1" style={{ color: colors.primary }} />
-                <div>
-                  <p className={`${fonts.subtitle} text-[#6B705C] mb-2`} style={{ color: colors.textLight }}>
-                    {eventDetails.reception.location}
-                  </p>
-                  <button
-                    onClick={() => openGoogleMaps(eventDetails.reception.link)}
-                    className="inline-flex items-center px-4 py-2 bg-[#D4A373] text-white rounded-md hover:bg-[#c49366] transition-colors duration-300 text-sm"
-                    style={{ backgroundColor: colors.primary, color: "white" }}
+          <div
+            className="bg-white rounded-2xl shadow-xl overflow-hidden transform hover:-translate-y-2 transition-all duration-300"
+            style={{ backgroundColor: colors.background }}
+          >
+            <div className="p-8">
+              <h3
+                className={`${fonts.title} text-2xl sm:text-3xl text-center mb-8`}
+                style={{ color: colors.primary }}
+              >
+                The Reception
+              </h3>
+              <div className="space-y-6">
+                <div className="flex items-center space-x-4">
+                  <div
+                    className="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center"
+                    style={{ backgroundColor: `${colors.primary}15` }}
                   >
-                    <MapPin className="w-4 h-4 mr-2" />
-                    <span className={fonts.body}>View Location</span>
-                  </button>
+                    <Calendar
+                      className="w-6 h-6"
+                      style={{ color: colors.primary }}
+                    />
+                  </div>
+                  <p
+                    className={`${fonts.subtitle} text-lg`}
+                    style={{ color: colors.textLight }}
+                  >
+                    {eventDetails.reception.date}
+                  </p>
+                </div>
+
+                <div className="flex items-start space-x-4">
+                  <div
+                    className="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center"
+                    style={{ backgroundColor: `${colors.primary}15` }}
+                  >
+                    <MapPin
+                      className="w-6 h-6"
+                      style={{ color: colors.primary }}
+                    />
+                  </div>
+                  <div className="flex-1">
+                    <p
+                      className={`${fonts.subtitle} text-lg mb-3`}
+                      style={{ color: colors.textLight }}
+                    >
+                      {eventDetails.reception.location}
+                    </p>
+                    <button
+                      onClick={() =>
+                        openGoogleMaps(eventDetails.reception.link)
+                      }
+                      className="inline-flex items-center px-6 py-3 rounded-full text-white shadow-lg transform hover:scale-105 transition-all duration-300"
+                      style={{ backgroundColor: colors.primary }}
+                    >
+                      <MapPin className="w-5 h-5 mr-2" />
+                      <span className={`${fonts.body} text-sm`}>
+                        View on Maps
+                      </span>
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
