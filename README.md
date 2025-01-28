@@ -1,6 +1,6 @@
 # Wedding Zinc - Undangan Pernikahan Digital
 
-Aplikasi undangan pernikahan digital yang elegan dan modern, dibuat dengan React, TypeScript, dan Tailwind CSS.
+Aplikasi undangan pernikahan digital yang elegan dan modern, dibuat dengan React, TypeScript, dan Tailwind CSS. Dilengkapi dengan fitur RSVP yang terintegrasi dengan Supabase untuk penyimpanan data.
 
 ## 📱 Demo & Preview
 
@@ -34,21 +34,34 @@ Aplikasi undangan pernikahan digital yang elegan dan modern, dibuat dengan React
 - Optimasi gambar otomatis
 - Mendukung berbagai format gambar
 
-### 5. RSVP
+### 5. RSVP dengan Supabase
 - Form konfirmasi kehadiran yang interaktif
 - Validasi input otomatis
 - Notifikasi sukses/error yang informatif
-- Integrasi dengan sistem backend (opsional)
+- Integrasi dengan Supabase untuk penyimpanan data
+- Fitur pagination untuk menampilkan pesan (5 pesan per halaman)
+- Batasan karakter pesan (maksimal 200 karakter)
+- Real-time update pesan ucapan
 
 ### 6. Amplop Digital
 - Informasi rekening yang terstruktur
 - Tampilan yang rapi dan profesional
-- Fitur salin nomor rekening
+- Fitur salin nomor rekening dengan satu klik
+- Konfirmasi visual saat nomor rekening disalin
+- Animasi hover pada kartu rekening
+
+### 7. Footer
+- Logo Vertical dengan link ke website perusahaan
+- Integrasi media sosial (Instagram, Facebook, Twitter, Email)
+- Informasi copyright dan alamat perusahaan
+- Link ke halaman Privacy Policy, Terms of Service, dan Contact
+- Desain responsif yang menyesuaikan ukuran layar
 
 ## 💻 Teknologi
 
 - React + TypeScript
 - Tailwind CSS
+- Supabase (Database & Authentication)
 - Lucide Icons
 - Google Maps API
 - Web Audio API
@@ -66,7 +79,37 @@ cd wedding-zinc
 npm install
 ```
 
-3. Jalankan aplikasi
+3. Setup Supabase
+```sql
+-- Buat tabel RSVP
+create table public.rsvp_demo (
+    id uuid default gen_random_uuid() primary key,
+    created_at timestamp with time zone default timezone('utc'::text, now()) not null,
+    name text not null,
+    attending text not null,
+    number_of_guests integer,
+    message text,
+    is_visible boolean default true
+);
+
+-- Enable Row Level Security
+alter table public.rsvp_demo enable row level security;
+
+-- Buat policy untuk view dan insert
+create policy "Allow public to view visible messages" 
+    on public.rsvp_demo for select using (is_visible = true);
+create policy "Allow public to insert" 
+    on public.rsvp_demo for insert with check (true);
+```
+
+4. Konfigurasi Environment
+```bash
+# .env
+VITE_SUPABASE_URL=your_supabase_url
+VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+```
+
+5. Jalankan aplikasi
 ```bash
 npm run dev
 ```
@@ -92,61 +135,22 @@ export const couple = {
     social: {
       instagram: "@username"
     }
+  },
+  bankAccounts: {
+    "BCA": "1234567890",
+    "Mandiri": "0987654321"
   }
 };
 ```
 
 ### 2. Waktu & Lokasi
-Edit file `src/constants/event-details.ts`:
-```typescript
-export const eventDetails = {
-  akad: {
-    date: "Sabtu, 24 Agustus 2024",
-    time: "10:00 WIB",
-    location: "Nama Tempat",
-    link: "URL Google Maps"
-  },
-  reception: {
-    date: "Sabtu, 24 Agustus 2024",
-    time: "19:00 WIB",
-    location: "Nama Tempat",
-    link: "URL Google Maps"
-  }
-};
-```
+Edit file `src/constants/event-details.ts`
 
 ### 3. Tema Warna
-Edit file `src/constants/colors.ts`:
-```typescript
-export const colors = {
-  primary: "#D4A373",
-  secondary: "#FEFAE0",
-  accent: "#CCD5AE",
-  background: "#FAEDCD",
-  text: "#4A4A4A",
-  textLight: "#6B705C"
-};
-```
+Edit file `src/constants/colors.ts`
 
 ### 4. Font
-Edit file `src/constants/font.ts`:
-```typescript
-export const fonts = {
-  title: "font-['Great_Vibes']",
-  subtitle: "font-['Cormorant_Garamond']",
-  body: "font-['Inter']"
-};
-```
-
-### 5. Musik Latar
-1. Siapkan file musik format MP3
-2. Simpan di folder `public/music/`
-3. Rename menjadi `background-music.mp3`
-
-### 6. Foto-Foto
-1. Optimasi ukuran foto (disarankan max 1MB per foto)
-2. Simpan di folder `public/images/`
-3. Update referensi di komponen terkait
+Edit file `src/constants/font.ts`
 
 ## 📱 Format URL Tamu
 
@@ -167,6 +171,11 @@ export const fonts = {
 3. Loading Time
    - Implementasi lazy loading untuk gambar
    - Preload untuk aset penting
+
+4. Database
+   - Gunakan pagination untuk RSVP messages
+   - Batasi jumlah karakter pesan
+   - Index kolom yang sering digunakan
 
 ## 📄 Lisensi
 

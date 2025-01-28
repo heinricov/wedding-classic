@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Cover from './components/Cover';
 import Detail from './components/Detail';
 import MusicPlayer from './components/MusicPlayer';
+import { Footer } from "./components/sections/Footer";
 
 function App() {
   const [isDetailVisible, setIsDetailVisible] = useState(false);
@@ -25,6 +26,7 @@ function App() {
       {!isDetailVisible && <Cover onOpen={handleOpen} />}
       <Detail isVisible={isDetailVisible} />
       <MusicPlayer showPlayer={isDetailVisible} />
+      <Footer />
     </div>
   );
 }
