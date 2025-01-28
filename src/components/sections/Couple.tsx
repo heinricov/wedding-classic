@@ -1,12 +1,13 @@
 import { Users } from "lucide-react";
 import { couple } from "../../constants/couple";
+import { colors } from "../../constants/colors";
 
 const Couple = () => {
   return (
-    <div className="py-16 px-4 bg-white">
+    <div className="py-16 px-4" style={{ backgroundColor: colors.background }}>
       <div className="max-w-4xl mx-auto text-center">
-        <Users className="mx-auto mb-6 w-8 h-8 text-[#D4A373]" />
-        <h2 className="text-3xl font-serif mb-12">The Happy Couple</h2>
+        <Users className="mx-auto mb-6 w-8 h-8" style={{ color: colors.primary }} />
+        <h2 className="text-3xl font-serif mb-12" style={{ color: colors.text }}>The Happy Couple</h2>
 
         <div className="grid md:grid-cols-2 gap-12">
           {/* Groom */}
@@ -18,14 +19,14 @@ const Couple = () => {
                 className="w-full h-full object-cover"
               />
             </div>
-            <h3 className="text-2xl font-serif mb-2">{couple.groom.name}</h3>
-            <p className="text-[#6B705C] mb-4">{couple.groom.birthPlaceDate}</p>
-            <p className="text-[#6B705C]">Son of</p>
-            <p className="text-[#D4A373] font-medium">
+            <h3 className="text-2xl font-serif mb-2" style={{ color: colors.primary }}>{couple.groom.name}</h3>
+            <p className="text-[#6B705C] mb-4" style={{ color: colors.textLight }}>{couple.groom.birthPlaceDate}</p>
+            <p className="text-[#6B705C]" style={{ color: colors.textLight }}>Son of</p>
+            <p className="text-[#D4A373] font-medium" style={{ color: colors.primary }}>
               {couple.groom.fatherName}
             </p>
-            <p className="text-[#D4A373] font-medium">&</p>
-            <p className="text-[#D4A373] font-medium">
+            <p className="text-[#D4A373] font-medium" style={{ color: colors.primary }}>&</p>
+            <p className="text-[#D4A373] font-medium" style={{ color: colors.primary }}>
               {couple.groom.motherName}
             </p>
           </div>
@@ -39,14 +40,14 @@ const Couple = () => {
                 className="w-full h-full object-cover"
               />
             </div>
-            <h3 className="text-2xl font-serif mb-2">{couple.bride.name}</h3>
-            <p className="text-[#6B705C] mb-4">{couple.bride.birthPlaceDate}</p>
-            <p className="text-[#6B705C]">Daughter of</p>
-            <p className="text-[#D4A373] font-medium">
+            <h3 className="text-2xl font-serif mb-2" style={{ color: colors.primary }}>{couple.bride.name}</h3>
+            <p className="text-[#6B705C] mb-4" style={{ color: colors.textLight }}>{couple.bride.birthPlaceDate}</p>
+            <p className="text-[#6B705C]" style={{ color: colors.textLight }}>Daughter of</p>
+            <p className="text-[#D4A373] font-medium" style={{ color: colors.primary }}>
               {couple.bride.fatherName}
             </p>
-            <p className="text-[#D4A373] font-medium">&</p>
-            <p className="text-[#D4A373] font-medium">
+            <p className="text-[#D4A373] font-medium" style={{ color: colors.primary }}>&</p>
+            <p className="text-[#D4A373] font-medium" style={{ color: colors.primary }}>
               {couple.bride.motherName}
             </p>
           </div>

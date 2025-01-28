@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { fonts } from "../constants/font";
 import { Music4, VolumeX } from "lucide-react";
+import { colors } from "../constants/colors";
 
 interface MusicPlayerProps {
   showPlayer: boolean;
@@ -67,11 +68,10 @@ const MusicPlayer: React.FC<MusicPlayerProps> = ({ showPlayer }) => {
   return (
     <button
       onClick={togglePlay}
-      className={`${
-        fonts.body
-      } fixed bottom-6 right-6 z-50 flex items-center gap-2 px-4 py-2 bg-[#D4A373] text-white rounded-full shadow-lg hover:bg-[#c49366] transition-all duration-300 ${
+      className={`${fonts.body} fixed bottom-6 right-6 z-50 flex items-center gap-2 px-4 py-2 rounded-full shadow-lg hover:opacity-90 transition-all duration-300 ${
         isPlaying ? "animate-pulse" : ""
       }`}
+      style={{ backgroundColor: colors.primary, color: "white" }}
     >
       {isPlaying ? (
         <Music4 className="w-5 h-5" />

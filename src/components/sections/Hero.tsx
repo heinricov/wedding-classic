@@ -1,26 +1,29 @@
-import { Heart } from "lucide-react";
 import { couple } from "../../constants/couple";
-import { fonts, textStyles } from "../../constants/font";
+import { fonts } from "../../constants/font";
+import { colors } from "../../constants/colors";
 import Countdown from "./Countdown";
 
 const Hero = () => {
   return (
     <div
-      className="min-h-screen flex items-center justify-center bg-cover bg-center relative"
+      className="min-h-screen bg-cover bg-center bg-no-repeat flex items-center justify-center relative"
       style={{
-        backgroundImage:
-          'url("https://images.unsplash.com/photo-1523438885200-e635ba2c371e?auto=format&fit=crop&q=80")',
+        backgroundImage: "url('/images/hero-bg.jpg')",
+        backgroundColor: colors.background,
       }}
     >
-      <div className="absolute inset-0 bg-black/30" />
-      <div className="text-center text-white relative z-10">
-        <Heart className="mx-auto mb-6 text-white w-12 h-12" />
-        <h1 className={textStyles.heroTitle}>
+      <div className="text-center p-8 relative z-10">
+        <h1
+          className={`${fonts.title} text-5xl md:text-7xl mb-4`}
+          style={{ color: colors.primary }}
+        >
           {couple.groom.name.split(" ")[0]}
-          <span className="mx-4">&</span>
+          <span className="mx-4" style={{ color: colors.primary }}>
+            &
+          </span>
           {couple.bride.name.split(" ")[0]}
         </h1>
-        <p className={`${fonts.subtitle} text-xl font-light`}>
+        <p className={`${fonts.subtitle} text-xl font-light text-white`}>
           We're getting married
         </p>
         <Countdown />

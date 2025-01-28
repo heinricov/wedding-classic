@@ -3,6 +3,7 @@ import { Calendar } from "lucide-react";
 import { getWeddingDateTime } from "../../constants/datetime";
 import { eventDetails } from "../../constants/event-details";
 import { fonts } from "../../constants/font";
+import { colors } from "../../constants/colors";
 
 const Countdown = () => {
   const [timeLeft, setTimeLeft] = useState({
@@ -14,35 +15,32 @@ const Countdown = () => {
   useEffect(() => {
     const calculateTimeLeft = () => {
       const weddingDate = new Date(getWeddingDateTime());
-      const now = new Date();
-      const difference = Math.max(weddingDate.getTime() - now.getTime(), 0);
+      const now = new Date().getTime();
+      const difference = weddingDate.getTime() - now;
 
-      return {
-        days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-        hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-        minutes: Math.floor((difference / 1000 / 60) % 60),
-      };
+      if (difference > 0) {
+        setTimeLeft({
+          days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+          hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+          minutes: Math.floor((difference / 1000 / 60) % 60),
+        });
+      }
     };
 
-    // Initial calculation
-    setTimeLeft(calculateTimeLeft());
-
-    // Update every minute
-    const timer = setInterval(() => {
-      setTimeLeft(calculateTimeLeft());
-    }, 60000); // Update every minute instead of every second
+    calculateTimeLeft();
+    const timer = setInterval(calculateTimeLeft, 1000 * 60); // Update every minute
 
     return () => clearInterval(timer);
   }, []);
 
-  const addToGoogleCalendar = () => {
-    const { location } = eventDetails.reception;
-    const eventDateTime = new Date(getWeddingDateTime());
-    const endDateTime = new Date(eventDateTime.getTime() + 4 * 60 * 60 * 1000); // 4 hours duration
+  const addToCalendar = () => {
+    const location = eventDetails.reception.location;
+    const startDateTime = new Date(getWeddingDateTime());
+    const endDateTime = new Date(startDateTime.getTime() + 4 * 60 * 60 * 1000); // 4 hours duration
 
-    const googleCalendarUrl = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(
-      "Wedding Celebration"
-    )}&dates=${eventDateTime
+    const googleCalendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(
+      "Our Wedding Day"
+    )}&dates=${startDateTime
       .toISOString()
       .replace(/[-:]/g, "")
       .replace(/\.\d{3}/, "")}/${endDateTime
@@ -56,49 +54,76 @@ const Countdown = () => {
   };
 
   return (
-    <div className="py-16 px-4 bg-background">
+    <div className="py-8 px-4 bg-background">
       <div className="max-w-4xl mx-auto text-center">
-        {/* <Timer className="mx-auto mb-6 w-8 h-8 text-[#D4A373]" />
-        <h2 className={`${fonts.heading} text-3xl mb-4`}>
-          Counting down to our special day
-        </h2> */}
-        <p className={`${fonts.subtitle} text-lg text-[#FAEDCD] mb-8`}>
+        <p
+          className={`${fonts.subtitle} text-lg mb-8 text-white`}
+          // style={{ color: colors.text }}
+        >
           {eventDetails.reception.date}
         </p>
 
-        <div className="grid grid-cols-3 gap-4 max-w-lg mx-auto mb-8">
-          <div className="p-4 rounded-lg bg-[#FAEDCD]">
-            <div className={`${fonts.title} text-4xl font-bold text-[#D4A373]`}>
+        <div className="grid grid-cols-3 gap-4 max-w-md mx-auto mb-8">
+          <div
+            className="p-4 rounded-lg"
+            style={{ backgroundColor: colors.secondary }}
+          >
+            <div
+              className={`${fonts.title} text-4xl font-bold`}
+              style={{ color: colors.primary }}
+            >
               {timeLeft.days}
             </div>
-            <div className={`${fonts.subtitle} text-sm text-[#6B705C]`}>
+            <div
+              className={`${fonts.subtitle} text-sm`}
+              style={{ color: colors.textLight }}
+            >
               Days
             </div>
           </div>
-          <div className="p-4 rounded-lg bg-[#FAEDCD]">
-            <div className={`${fonts.title} text-4xl font-bold text-[#D4A373]`}>
+          <div
+            className="p-4 rounded-lg"
+            style={{ backgroundColor: colors.secondary }}
+          >
+            <div
+              className={`${fonts.title} text-4xl font-bold`}
+              style={{ color: colors.primary }}
+            >
               {timeLeft.hours}
             </div>
-            <div className={`${fonts.subtitle} text-sm text-[#6B705C]`}>
+            <div
+              className={`${fonts.subtitle} text-sm`}
+              style={{ color: colors.textLight }}
+            >
               Hours
             </div>
           </div>
-          <div className="p-4 rounded-lg bg-[#FAEDCD]">
-            <div className={`${fonts.title} text-4xl font-bold text-[#D4A373]`}>
+          <div
+            className="p-4 rounded-lg"
+            style={{ backgroundColor: colors.secondary }}
+          >
+            <div
+              className={`${fonts.title} text-4xl font-bold`}
+              style={{ color: colors.primary }}
+            >
               {timeLeft.minutes}
             </div>
-            <div className={`${fonts.subtitle} text-sm text-[#6B705C]`}>
+            <div
+              className={`${fonts.subtitle} text-sm`}
+              style={{ color: colors.textLight }}
+            >
               Minutes
             </div>
           </div>
         </div>
 
         <button
-          onClick={addToGoogleCalendar}
-          className="inline-flex items-center px-6 py-3 bg-[#D4A373] text-white rounded-md hover:bg-[#c49366] transition-colors duration-300"
+          onClick={addToCalendar}
+          className="inline-flex items-center px-6 py-3 rounded-full text-white hover:opacity-90 transition-opacity duration-300"
+          style={{ backgroundColor: colors.primary }}
         >
           <Calendar className="w-5 h-5 mr-2" />
-          <span className={fonts.body}>Add to Google Calendar</span>
+          Add to Calendar
         </button>
       </div>
     </div>
