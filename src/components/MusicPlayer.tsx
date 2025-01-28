@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Music2, Pause } from "lucide-react";
 import { fonts } from "../constants/font";
+import { Music4, VolumeX } from "lucide-react";
 
 interface MusicPlayerProps {
   showPlayer: boolean;
@@ -74,13 +74,10 @@ const MusicPlayer: React.FC<MusicPlayerProps> = ({ showPlayer }) => {
       }`}
     >
       {isPlaying ? (
-        <Pause className="w-5 h-5" />
+        <Music4 className="w-5 h-5" />
       ) : (
-        <Music2 className="w-5 h-5" />
+        <VolumeX className="w-5 h-5" />
       )}
-      <span className="text-sm">
-        {isPlaying ? "Pause Music" : "Play Music"}
-      </span>
     </button>
   );
 };

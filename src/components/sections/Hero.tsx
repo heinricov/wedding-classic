@@ -1,6 +1,7 @@
 import { Heart } from "lucide-react";
 import { couple } from "../../constants/couple";
 import { fonts, textStyles } from "../../constants/font";
+import Countdown from "./Countdown";
 
 const Hero = () => {
   return (
@@ -19,7 +20,10 @@ const Hero = () => {
           <span className="mx-4">&</span>
           {couple.bride.name.split(" ")[0]}
         </h1>
-        <p className={`${fonts.subtitle} text-xl font-light`}>We're getting married</p>
+        <p className={`${fonts.subtitle} text-xl font-light`}>
+          We're getting married
+        </p>
+        <Countdown />
       </div>
     </div>
   );

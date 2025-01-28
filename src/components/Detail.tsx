@@ -1,6 +1,5 @@
 import React from "react";
 import Hero from "./sections/Hero";
-import Countdown from "./sections/Countdown";
 import Pray from "./sections/Pray";
 import Couple from "./sections/Couple";
 import DayTimeLocation from "./sections/DayTimeLocation";
@@ -22,7 +21,6 @@ const Detail: React.FC<DetailProps> = ({ isVisible }) => {
       }`}
     >
       <Hero />
-      <Countdown />
       <Pray />
       <Couple />
       <DayTimeLocation />

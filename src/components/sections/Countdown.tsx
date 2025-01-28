@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Timer, Calendar } from "lucide-react";
+import { Calendar } from "lucide-react";
 import { getWeddingDateTime } from "../../constants/datetime";
 import { eventDetails } from "../../constants/event-details";
 import { fonts } from "../../constants/font";
@@ -48,10 +48,7 @@ const Countdown = () => {
       .replace(/\.\d{3}/, "")}/${endDateTime
       .toISOString()
       .replace(/[-:]/g, "")
-      .replace(
-        /\.\d{3}/,
-        ""
-      )}&details=${encodeURIComponent(
+      .replace(/\.\d{3}/, "")}&details=${encodeURIComponent(
       "Wedding Celebration"
     )}&location=${encodeURIComponent(location)}`;
 
@@ -59,13 +56,13 @@ const Countdown = () => {
   };
 
   return (
-    <div className="py-16 px-4 bg-white">
+    <div className="py-16 px-4 bg-background">
       <div className="max-w-4xl mx-auto text-center">
-        <Timer className="mx-auto mb-6 w-8 h-8 text-[#D4A373]" />
+        {/* <Timer className="mx-auto mb-6 w-8 h-8 text-[#D4A373]" />
         <h2 className={`${fonts.heading} text-3xl mb-4`}>
           Counting down to our special day
-        </h2>
-        <p className={`${fonts.subtitle} text-lg text-[#6B705C] mb-8`}>
+        </h2> */}
+        <p className={`${fonts.subtitle} text-lg text-[#FAEDCD] mb-8`}>
           {eventDetails.reception.date}
         </p>
 
@@ -74,19 +71,25 @@ const Countdown = () => {
             <div className={`${fonts.title} text-4xl font-bold text-[#D4A373]`}>
               {timeLeft.days}
             </div>
-            <div className={`${fonts.subtitle} text-sm text-[#6B705C]`}>Days</div>
+            <div className={`${fonts.subtitle} text-sm text-[#6B705C]`}>
+              Days
+            </div>
           </div>
           <div className="p-4 rounded-lg bg-[#FAEDCD]">
             <div className={`${fonts.title} text-4xl font-bold text-[#D4A373]`}>
               {timeLeft.hours}
             </div>
-            <div className={`${fonts.subtitle} text-sm text-[#6B705C]`}>Hours</div>
+            <div className={`${fonts.subtitle} text-sm text-[#6B705C]`}>
+              Hours
+            </div>
           </div>
           <div className="p-4 rounded-lg bg-[#FAEDCD]">
             <div className={`${fonts.title} text-4xl font-bold text-[#D4A373]`}>
               {timeLeft.minutes}
             </div>
-            <div className={`${fonts.subtitle} text-sm text-[#6B705C]`}>Minutes</div>
+            <div className={`${fonts.subtitle} text-sm text-[#6B705C]`}>
+              Minutes
+            </div>
           </div>
         </div>
 
