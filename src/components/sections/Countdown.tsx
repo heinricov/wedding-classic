@@ -56,12 +56,20 @@ const Countdown = () => {
   return (
     <div className="py-8 px-4 bg-background">
       <div className="max-w-4xl mx-auto text-center">
-        <p
-          className={`${fonts.subtitle} text-lg mb-8 text-white`}
-          // style={{ color: colors.text }}
-        >
-          {eventDetails.reception.date}
-        </p>
+        <div className="mb-8 max-w-sx mx-auto">
+          <p
+            className={`${fonts.subtitle} font-bold text-2xl md:text-4xl text-white`}
+            // style={{ color: colors.text }}
+          >
+            {eventDetails.reception.day}
+          </p>
+          <p
+            className={`${fonts.subtitle} font-bold text-2xl md:text-4xl mb-8 text-white`}
+            // style={{ color: colors.text }}
+          >
+            {eventDetails.reception.time}
+          </p>
+        </div>
 
         <div className="grid grid-cols-3 gap-4 max-w-md mx-auto mb-8">
           <div
